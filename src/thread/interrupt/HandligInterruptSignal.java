@@ -5,8 +5,11 @@ import java.math.BigInteger;
 public class HandligInterruptSignal {
 	public static void main (String[] args) {
 		Thread thread = new Thread(new LongComputationTask(new BigInteger("100000"), new BigInteger("5000000")));
+		
+		thread.setDaemon(true);
 		thread.start();
 		thread.interrupt();
+		System.out.println("Finished");
 	}
 	
 	private static class LongComputationTask implements Runnable{
@@ -27,10 +30,10 @@ public class HandligInterruptSignal {
 			BigInteger result = BigInteger.ONE;
 			
 			for(BigInteger i = BigInteger.ZERO; i.compareTo(power) != 0; i = i.add(BigInteger.ONE)) {
-				if(Thread.currentThread().isInterrupted()) {
-					System.out.println("Prematurely interrupted computation");
-					return BigInteger.ZERO;
-				}
+				//if(Thread.currentThread().isInterrupted()) {
+				//	System.out.println("Prematurely interrupted computation");
+				//	return BigInteger.ZERO;
+				//}
 				result = result.multiply(base);
 			}
 			
